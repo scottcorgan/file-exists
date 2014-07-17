@@ -20,6 +20,7 @@ console.log(fileExists('/index.html')) // OUTPUTS: true or false
 
 #### fileExists(filepath[, options])
 
+* `filepath` - the path to the file to check if it exists
 * `options` - an object of options
   * `root` - the root directory to look in (or cwd)
   
