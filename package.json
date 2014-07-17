@@ -25,5 +25,11 @@
   "bugs": {
     "url": "https://github.com/scottcorgan/file-exists/issues"
   },
-  "homepage": "https://github.com/scottcorgan/file-exists"
+  "homepage": "https://github.com/scottcorgan/file-exists",
+  "devDependencies": {
+    "mkdirp": "^0.5.0",
+    "rmdir": "^1.0.4",
+    "tap-spec": "^0.2.0",
+    "tape": "^2.13.3"
+  }
 }
