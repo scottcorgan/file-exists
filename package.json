@@ -1,0 +1,29 @@
+{
+  "name": "file-exists",
+  "version": "0.1.0",
+  "description": "Check if filepath exists and is a file",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/index.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:scottcorgan/file-exists.git"
+  },
+  "keywords": [
+    "file",
+    "exists",
+    "fs",
+    "isfile",
+    "is-file"
+  ],
+  "author": "Scott Corgan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scottcorgan/file-exists/issues"
+  },
+  "homepage": "https://github.com/scottcorgan/file-exists"
+}
