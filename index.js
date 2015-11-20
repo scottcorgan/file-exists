@@ -6,12 +6,12 @@ module.exports = function (filepath, options) {
   
   if (!filepath) return false;
   
-  var root  = options.root;
+  var root = options.root;
   var fullpath = (root) ? path.join(root, filepath) : filepath;
   
-  
-  if (!fs.existsSync(fullpath)) return false;
-  if (!fs.statSync(fullpath).isFile()) return false;
-  
-  return true;
+  try {
+    return fs.statSync(fullpath).isFile();
+  } catch (e) {
+    return false;
+  }
 };
