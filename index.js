@@ -10,8 +10,16 @@ module.exports = function (filepath, options) {
   var fullpath = (root) ? path.join(root, filepath) : filepath
 
   try {
-    return fs.statSync(fullpath).isFile()
-  } catch (e) {
-    return false
+    return fs.statSync(fullpath).isFile();
+  }
+  catch (e) {
+  
+    if (e.code == 'ENOENT') { // no such file or directory 
+      console.log("File does not exist.");
+      return false;
+    }
+    
+    // something else went wrong, we don't have rights, ...
+    throw e;
   }
 }
