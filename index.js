@@ -13,11 +13,9 @@ module.exports = function (filepath, options) {
     return fs.statSync(fullpath).isFile();
   }
   catch (e) {
-  
-    if (e.code == 'ENOENT') { // no such file or directory 
-      console.log("File does not exist.");
+    
+    if (e.code == 'ENOENT') // no such file or directory 
       return false;
-    }
     
     // something else went wrong, we don't have rights, ...
     throw e;
