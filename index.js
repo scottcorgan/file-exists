@@ -14,10 +14,11 @@ module.exports = function (filepath, options) {
   }
   catch (e) {
     
-    if (e.code == 'ENOENT') // no such file or directory 
-      return false;
+    // Check exception. If ENOENT - no such file or directory ok, file doesn't exist. 
+    // Otherwise something else went wrong, we don't have rights to access the file, ...
+    if (e.code != 'ENOENT') 
+      throw e;
     
-    // something else went wrong, we don't have rights, ...
-    throw e;
+    return false;
   }
 }
