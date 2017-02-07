@@ -1,18 +1,45 @@
-var fileExists = require('../')
-var test = require('tape')
-var fs = require('fs')
-var mkdirp = require('mkdirp')
-var rmdir = require('rmdir')
+const fileExists = require('../')
+const test = require('tape')
+const fs = require('fs')
+const mkdirp = require('mkdirp')
+const rmdir = require('rmdir')
+const async = require('async')
 
-test('file exists', function (t) {
+test('async', t => {
   mkdirp.sync('.tmp')
   fs.writeFileSync('.tmp/index.html', 'test', 'utf8')
 
-  t.ok(fileExists('.tmp/index.html'), 'file does exist')
-  t.ok(fileExists('/index.html', {root: '.tmp'}), 'file exists in given root directory')
-  t.notOk(fileExists('.tmp'), 'directory is not a file')
-
-  rmdir('.tmp', function () {
-    t.end()
+  async.parallel([
+    done => {
+      fileExists('.tmp/index.html', (err, exists) => {
+        t.ok(exists, 'file does exist')
+        done()
+      })
+    },
+    done => {
+      fileExists('/index.html', {root: '.tmp'}, (err, exists) => {
+        t.ok(exists, 'file exists in given root directory')
+        done()
+      })
+    },
+    done => {
+      fileExists('.tmp', (err, exists) => {
+        t.notOk(exists, 'directory is not a file')
+        done()
+      })
+    }
+  ], err => {
+    rmdir('.tmp', () => t.end())
   })
+})
+
+test('sync', t => {
+  mkdirp.sync('.tmp')
+  fs.writeFileSync('.tmp/index.html', 'test', 'utf8')
+
+  t.ok(fileExists.sync('.tmp/index.html'), 'file does exist')
+  t.ok(fileExists.sync('/index.html', {root: '.tmp'}), 'file exists in given root directory')
+  t.notOk(fileExists.sync('.tmp'), 'directory is not a file')
+
+  rmdir('.tmp', () => t.end())
 })

@@ -1,24 +1,33 @@
-var fs = require('fs')
-var path = require('path')
+const fs = require('fs')
+const path = require('path')
 
-module.exports = function (filepath, options) {
-  options = options || {}
+function fileExits (filepath, options, done = function () {}) {
+  if (typeof options === 'function') {
+    done = options
+    options = {}
+  }
 
-  if (!filepath) return false
+  fs.stat(fullPath(filepath, options), (err, stats) => done(err, stats.isFile()))
+}
 
-  var root = options.root
-  var fullpath = (root) ? path.join(root, filepath) : filepath
-
+fileExits.sync = function fileExistsSync (filepath = '', options = {}) {
   try {
-    return fs.statSync(fullpath).isFile();
+    return fs.statSync(fullPath(filepath, options)).isFile()
   }
   catch (e) {
-    
-    // Check exception. If ENOENT - no such file or directory ok, file doesn't exist. 
+    // Check exception. If ENOENT - no such file or directory ok, file doesn't exist.
     // Otherwise something else went wrong, we don't have rights to access the file, ...
-    if (e.code != 'ENOENT') 
-      throw e;
-    
-    return false;
+    if (e.code != 'ENOENT') {
+      throw e
+    }
+
+    return false
   }
 }
+
+function fullPath (filepath, options = {}) {
+  const root = options.root
+  return (root) ? path.join(root, filepath) : filepath
+}
+
+module.exports = fileExits
