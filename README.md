@@ -2,7 +2,7 @@
 
 Check if filepath exists and is a file. Returns false for directories.
 
-_(No requires node >=6.0.0)_
+_(Requires node >=6.0.0)_
 
 ## Install
 
