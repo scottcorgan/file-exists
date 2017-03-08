@@ -7,7 +7,13 @@ function fileExits (filepath, options, done = function () {}) {
     options = {}
   }
 
-  fs.stat(fullPath(filepath, options), (err, stats) => done(err, stats.isFile()))
+  fs.stat(fullPath(filepath, options), (err, stats) => {
+    if (err) {
+      return done(err)
+    }
+
+    done(null, stats.isFile())
+  })
 }
 
 fileExits.sync = function fileExistsSync (filepath = '', options = {}) {
