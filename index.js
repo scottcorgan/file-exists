@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-function fileExits (filepath, options, done = function () {}) {
+function fileExists (filepath, options, done = function () {}) {
   if (typeof options === 'function') {
     done = options
     options = {}
@@ -16,7 +16,7 @@ function fileExits (filepath, options, done = function () {}) {
   })
 }
 
-fileExits.sync = function fileExistsSync (filepath = '', options = {}) {
+fileExists.sync = function fileExistsSync (filepath = '', options = {}) {
   try {
     return fs.statSync(fullPath(filepath, options)).isFile()
   }
@@ -36,4 +36,4 @@ function fullPath (filepath, options = {}) {
   return (root) ? path.join(root, filepath) : filepath
 }
 
-module.exports = fileExits
+module.exports = fileExists
