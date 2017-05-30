@@ -9,7 +9,9 @@ function fileExists (filepath, options, done = function () {}) {
 
   fs.stat(fullPath(filepath, options), (err, stats) => {
     if (err) {
-      return done(err)
+      return err.code === "ENOENT" ?
+        done(null, false) :
+        done(err)
     }
 
     done(null, stats.isFile())
