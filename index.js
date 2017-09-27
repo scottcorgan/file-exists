@@ -8,10 +8,12 @@ function fileExists (filepath, options, done) {
   }
 
   if (!done) {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       fs.stat(fullPath(filepath, options), (err, stats) => {
         if (err) {
-          return resolve(err.code === 'ENOENT' ? false : err)
+          return err.code === 'ENOENT'
+            ? resolve(false)
+            : reject(err)
         }
         resolve(stats.isFile())
       })
