@@ -34,6 +34,18 @@ test('async', t => {
         t.notOk(exists, 'non-existing file doesn\'t exist')
         done()
       })
+    },
+    done => {
+      fileExists('promise-not.here').then(exists => {
+        t.notOk(exists, 'promise: non-existing file doesn\'t exist')
+        done()
+      })
+    },
+    done => {
+      fileExists('.tmp/index.html').then(exists => {
+        t.ok(exists, 'promise: existing file exists')
+        done()
+      })
     }
   ], err => {
     rmdir('.tmp', () => t.end())
