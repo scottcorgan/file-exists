@@ -1,10 +1,23 @@
 const fs = require('fs')
 const path = require('path')
 
-function fileExists (filepath, options, done = function () {}) {
+function fileExists (filepath, options, done) {
   if (typeof options === 'function') {
     done = options
     options = {}
+  }
+
+  if (!done) {
+    return new Promise((resolve, reject) => {
+      fs.stat(fullPath(filepath, options), (err, stats) => {
+        if (err) {
+          return err.code === 'ENOENT'
+            ? resolve(false)
+            : reject(err)
+        }
+        resolve(stats.isFile())
+      })
+    })
   }
 
   fs.stat(fullPath(filepath, options), (err, stats) => {
