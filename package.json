@@ -1,6 +1,6 @@
 {
   "name": "file-exists",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Check if filepath exists and is a file",
   "main": "index.js",
   "directories": {
