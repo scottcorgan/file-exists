@@ -31,9 +31,10 @@ function fileExists (filepath, options, done) {
   })
 }
 
-fileExists.sync = function fileExistsSync (filepath = '', options = {}) {
+fileExists.sync = function fileExistsSync (filepath, options = {}) {
+  const filePath = filepath || '';
   try {
-    return fs.statSync(fullPath(filepath, options)).isFile()
+    return fs.statSync(fullPath(filePath, options)).isFile()
   }
   catch (e) {
     // Check exception. If ENOENT - no such file or directory ok, file doesn't exist.
