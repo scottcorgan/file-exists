@@ -48,8 +48,9 @@ fileExists.sync = function fileExistsSync (filepath, options) {
   }
 }
 
-function fullPath (filepath, options = {}) {
-  const root = options.root
+function fullPath (filepath, options) {
+  const _options = options || {};
+  const root = _options.root;
   return (root) ? path.join(root, filepath) : filepath
 }
 
