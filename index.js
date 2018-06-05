@@ -31,10 +31,11 @@ function fileExists (filepath, options, done) {
   })
 }
 
-fileExists.sync = function fileExistsSync (filepath, options = {}) {
-  const filePath = filepath || '';
+fileExists.sync = function fileExistsSync (filepath, options) {
+  const _filepath = filepath || '';
+  const _options = options || {};
   try {
-    return fs.statSync(fullPath(filePath, options)).isFile()
+    return fs.statSync(fullPath(_filepath, _options)).isFile()
   }
   catch (e) {
     // Check exception. If ENOENT - no such file or directory ok, file doesn't exist.
@@ -47,8 +48,9 @@ fileExists.sync = function fileExistsSync (filepath, options = {}) {
   }
 }
 
-function fullPath (filepath, options = {}) {
-  const root = options.root
+function fullPath (filepath, options) {
+  const _options = options || {};
+  const root = _options.root;
   return (root) ? path.join(root, filepath) : filepath
 }
 
