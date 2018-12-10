@@ -7,9 +7,15 @@ function fileExists (filepath, options, done) {
     options = {}
   }
 
+  var fileSystem = fs;
+  if(options && options.fileSystem)
+  {
+    fileSystem = options.fileSystem
+  }
+  
   if (!done) {
     return new Promise((resolve, reject) => {
-      fs.stat(fullPath(filepath, options), (err, stats) => {
+      fileSystem.stat(fullPath(filepath, options), (err, stats) => {
         if (err) {
           return err.code === 'ENOENT'
             ? resolve(false)
@@ -20,7 +26,7 @@ function fileExists (filepath, options, done) {
     })
   }
 
-  fs.stat(fullPath(filepath, options), (err, stats) => {
+  fileSystem.stat(fullPath(filepath, options), (err, stats) => {
     if (err) {
       return err.code === 'ENOENT'
         ? done(null, false)
@@ -35,7 +41,8 @@ fileExists.sync = function fileExistsSync (filepath, options) {
   const _filepath = filepath || '';
   const _options = options || {};
   try {
-    return fs.statSync(fullPath(_filepath, _options)).isFile()
+    var fileSystem = _options.fileSystem || fs;
+    return fileSystem.statSync(fullPath(_filepath, _options)).isFile()
   }
   catch (e) {
     // Check exception. If ENOENT - no such file or directory ok, file doesn't exist.
