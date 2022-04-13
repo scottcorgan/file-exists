@@ -31,7 +31,7 @@
   "homepage": "https://github.com/scottcorgan/file-exists",
   "devDependencies": {
     "@tap-format/spec": "^0.2.0",
-    "async": "^2.1.4",
+    "async": "^3.2.2",
     "mkdirp": "0.5.1",
     "rmdir": "1.2.0",
     "tape": "4.6.3"
